@@ -1,0 +1,85 @@
+﻿@model Express_Voitures.Models.Voiture
+
+@{
+    ViewData["Title"] = "Ajouter une voiture";
+}
+
+<div class="form-wrapper">
+    <h1 class="main-title">Ajouter une voiture</h1>
+    <p class="mandatory-text">tous les champs sont obligatoires</p>
+
+    <form asp-action="Create" method="post" enctype="multipart/form-data" class="car-form">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="field-container">
+            <label asp-for="Vin" class="label-style">Numéro VIN</label>
+            <input asp-for="Vin" class="input-rect" />
+            <span asp-validation-for="Vin" class="text-danger"></span>
+        </div>
+        <div class="field-container">
+            <label asp-for="Annee" class="label-style">Année</label>
+            <input asp-for="Annee" class="input-rect" />
+            <span asp-validation-for="Annee" class="text-danger"></span>
+        </div>
+        <div class="field-container">
+            <label asp-for="MarqueId" class="label-style">Marque</label>
+            <select asp-for="MarqueId" asp-items="ViewBag.MarqueId" id="MarqueId" class="input-rect">
+                <option value="">-- Sélectionnez une marque --</option>
+            </select>
+        </div>
+        <div class="field-container">
+            <label asp-for="ModeleId" class="label-style">Modèle</label>
+            <select asp-for="ModeleId" id="ModeleId" class="input-rect">
+                <option value="">-- Sélectionnez d'abord une marque --</option>
+            </select>
+        </div>
+        <div class="field-container">
+            <label asp-for="FinitionId" class="label-style">Finition</label>
+            <select asp-for="FinitionId" id="FinitionId" class="input-rect">
+                <option value="">-- Sélectionnez d'abord un modèle --</option>
+            </select>
+        </div>
+        <div class="field-container">
+            <label asp-for="DateAchat" class="label-style">Date d'achat</label>
+            <input asp-for="DateAchat" type="date" class="input-rect" />
+        </div>
+        <div class="field-container">
+            <label asp-for="PrixAchat" class="label-style">Prix d'achat</label>
+            <input asp-for="PrixAchat" class="input-rect" />
+        </div>
+        <div class="field-container">
+            <label asp-for="DateDisponibilite" class="label-style">Date de disponibilité</label>
+            <input asp-for="DateDisponibilite" type="date" class="input-rect" />
+        </div>
+        <div class="field-container">
+            <label asp-for="DateVente" class="label-style">Date de vente</label>
+            <input asp-for="DateVente" type="date" class="input-rect" />
+        </div>
+        <div class="field-container">
+            <label class="label-style">Visuel</label>
+            <div class="upload-zone">
+                <input type="file" name="PhotoFile" id="PhotoFile" class="file-hidden" accept="image/*" />
+                <label for="PhotoFile" class="upload-trigger">
+                    <div class="plus-box">
+                        <span class="plus-char">+</span>
+                    </div>
+                    <span class="plus-label">Ajoutez une image</span>
+                </label>
+            </div>
+        </div>
+        <div class="field-container">
+            <label asp-for="Description" class="label-style">Description</label>
+            <textarea asp-for="Description" class="input-rect area-height"></textarea>
+        </div>
+        <div class="button-area">
+            <button type="submit" class="btn-publish">Publier</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/cascade-dropdowns.js"></script>
+}

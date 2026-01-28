@@ -1,0 +1,98 @@
+﻿@model IEnumerable<Express_Voitures.Models.Voiture>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Vin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Annee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateAchat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrixAchat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateDisponibilite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateVente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Marque)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Modele)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Finition)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Annee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateAchat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrixAchat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateDisponibilite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateVente)
+            </td>
+            <td>
+                    @if (!string.IsNullOrWhiteSpace(item.PhotoUrl))
+                    {
+                        <img src="@item.PhotoUrl" alt="@item.Marque?.Nom @item.Modele?.Nom" style="max-height:100px;" class="img-fluid rounded" />
+                    }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Marque.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modele.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Finition.Nom)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

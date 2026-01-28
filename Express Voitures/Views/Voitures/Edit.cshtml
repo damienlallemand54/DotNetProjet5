@@ -1,0 +1,159 @@
+﻿@model Express_Voitures.Models.Voiture
+
+@{
+    ViewData["Title"] = "Modifier la voiture";
+}
+
+<div class="form-wrapper">
+    <h1 class="main-title" style="margin-bottom: 40px;">Modifier l'annonce</h1>
+
+    <form asp-action="Edit" method="post" enctype="multipart/form-data" class="car-form">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="PhotoUrl" /> 
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="field-container">
+            <label asp-for="Vin" class="label-style">Numéro VIN</label>
+            <input asp-for="Vin" class="input-rect" />
+            <span asp-validation-for="Vin" class="text-danger"></span>
+        </div>
+
+        <div class="field-container">
+            <label asp-for="Annee" class="label-style">Année</label>
+            <input asp-for="Annee" class="input-rect" />
+            <span asp-validation-for="Annee" class="text-danger"></span>
+        </div>
+
+        <div class="field-container" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+            <label asp-for="MarqueId" class="label-style">Marque</label>
+            <select asp-for="MarqueId" id="MarqueId" class="input-rect" asp-items="ViewBag.MarqueId"></select>
+        </div>
+
+        <div class="field-container" style="display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 15px;">
+            <label asp-for="ModeleId" class="label-style">Modèle</label>
+            <select asp-for="ModeleId" id="ModeleId" class="input-rect"
+                    data-selected-value="@Model.ModeleId"></select>
+        </div>
+
+        <div class="field-container" style="display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 15px;">
+            <label asp-for="FinitionId" class="label-style">Finition</label>
+            <select asp-for="FinitionId" id="FinitionId" class="input-rect"
+                    data-selected-value="@Model.FinitionId"></select>
+        </div>
+
+        <div class="field-container">
+            <label asp-for="DateAchat" class="label-style">Date d'achat</label>
+            <input asp-for="DateAchat" type="date" class="input-rect" />
+        </div>
+
+        <div class="field-container">
+            <label asp-for="PrixAchat" class="label-style">Prix d'achat</label>
+            <input asp-for="PrixAchat"
+                   class="input-rect"
+                   type="number"
+                   step="0.01"
+                   lang="fr-FR" />
+            <span asp-validation-for="PrixAchat" class="text-danger"></span>
+        </div>
+
+        <div class="field-container">
+            <label asp-for="DateDisponibilite" class="label-style">Date de disponibilité</label>
+            <input asp-for="DateDisponibilite" type="date" class="input-rect" />
+        </div>
+
+        <div class="field-container">
+            <label asp-for="DateVente" class="label-style">Date de vente</label>
+            <input asp-for="DateVente" type="date" class="input-rect" />
+        </div>
+
+        <div class="field-container">
+            <label class="label-style">Modifier le visuel (optionnel)</label>
+            <div class="upload-zone">
+                <input type="file" name="PhotoFile" id="PhotoFile" class="file-hidden" accept="image/*" />
+                <label for="PhotoFile" class="upload-trigger">
+                    <div class="plus-box">
+                        <span class="plus-char">+</span>
+                    </div>
+                    <span class="plus-label">Changer l'image</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="field-container">
+            <label asp-for="Description" class="label-style">Description</label>
+            <textarea asp-for="Description" class="input-rect area-height"></textarea>
+        </div>
+         
+        <div class="button-area" style="margin-top: 40px; display: flex; flex-direction: column; align-items: center; gap: 15px; width: 100%;">
+
+            <button type="submit" class="btn-publish" style="width: 100%; max-width: 400px; min-height: 55px; padding: 10px 20px; font-size: 1.1rem; white-space: normal; word-wrap: break-word; display: flex; align-items: center; justify-content: center; text-align: center;">
+                Enregistrer les modifications
+            </button>
+
+            <a asp-action="Index" class="btn-back" style="text-decoration: none; color: #796157; font-size: 0.9rem; border-bottom: 1px solid transparent;" onmouseover="this.style.borderBottom='1px solid #796157'" onmouseout="this.style.borderBottom='1px solid transparent'">
+                Annuler et retourner à l'inventaire
+            </a>
+
+        </div>
+    </form>
+
+    <div style="margin-top: 40px; border-top: 1px solid #eee; padding-top: 40px; width: 100%;">
+        <div style="padding: 0 10%; width: 100%;">
+            <h3 class="label-style" style="font-size: 1.2rem; margin-bottom: 20px;">Réparations</h3>
+
+            @if (Model.Reparations != null && Model.Reparations.Any())
+            {
+                <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid #d9a963;">
+                            <th style="text-align: left; padding: 10px; color: #796157; font-size: 0.8rem; text-transform: uppercase;">Description</th>
+                            <th style="text-align: right; padding: 10px; color: #796157; font-size: 0.8rem; text-transform: uppercase;">Coût</th>
+                            <th style="width: 40px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var rep in Model.Reparations)
+                        {
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 10px; color: #333;">@rep.Description</td>
+                                <td style="padding: 10px; text-align: right; font-weight: bold;">@rep.Cout.ToString("C")</td>
+                                <td style="padding: 10px; text-align: center;">
+                                    <form asp-controller="Reparations" asp-action="Delete" asp-route-id="@rep.Id"
+                                          method="post" onsubmit="return confirm('Supprimer ce frais ?');">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" style="background:none; border:none; color:#e74c3c; cursor:pointer; font-weight:bold; font-size:1.4rem; line-height:1;">
+                                            &times;
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p style="font-style: italic; color: #999; margin-bottom: 20px;">Aucun frais enregistré pour le moment.</p>
+            }
+
+            <div style="text-align: center; margin-top: 30px;">
+                <a asp-controller="Reparations"
+                   asp-action="Create"
+                   asp-route-voitureId="@Model.Id"
+                   class="btn-gold"
+                   style="display: inline-block; padding: 10px 25px; text-decoration: none; border: 1px solid #d9a963; color: #d9a963; border-radius: 4px; font-weight: bold; font-size: 0.8rem; text-transform: uppercase;">
+                    + Ajouter une réparation
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/cascade-dropdowns.js"></script>
+}

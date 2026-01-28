@@ -1,0 +1,46 @@
+﻿@model Express_Voitures.Models.Voiture
+
+<div class="container car-details-page">
+    <div class="car-block">
+        <button class="btn-return" onclick="location.href='@Url.Action("Index", "Home")'">
+            <span class="arrow-left">&#8592;</span>
+            <span class="return-text">Retour</span>
+        </button>
+        <div class="car-image-col">
+            <img src="@Model.PhotoUrl" alt="@Model.Marque?.Nom @Model.Modele?.Nom" class="car-detail-image" />
+        </div>
+        <div class="car-info-col">
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="admin-message" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;">
+                    <p style="font-family: 'DM Sans'; font-weight: 400; font-size: 16px; line-height: 100%; color: #2C1810; margin:0;">
+                        Vous avez publié cette annonce, vous pouvez le :
+                    </p>
+                    <div style="display: flex; gap: 16px; align-items: center;">
+                        <a href="@Url.Action("Edit", "Voitures", new { id = Model.Id })"
+                           style="font-family: 'DM Sans'; font-weight: 400; font-size: 16px; line-height: 100%; color: #929292; text-decoration: underline;">
+                            Modifier
+                        </a>
+                        <form asp-action="Delete" asp-controller="Voitures" asp-route-id="@Model.Id"
+                              method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer cette voiture ?');" style="display:inline;">
+                            <button type="submit"
+                                    style="font-family: 'DM Sans'; font-weight: 400; font-size: 16px; line-height: 100%; color: #D70000; text-decoration: underline; background:none; border:none; padding:0; cursor:pointer;">
+                                Supprimer
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            }
+
+            <p class="car-price">@Model.PrixVente.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("fr-FR"))</p>
+            <div class="car-details-list">
+                <p class="car-detail">@Model.Annee</p>
+                <p class="car-detail">@Model.Marque?.Nom</p>
+                <p class="car-detail">@Model.Modele?.Nom</p>
+                <p class="car-detail">@Model.Finition?.Nom</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+

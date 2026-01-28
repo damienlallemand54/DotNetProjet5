@@ -1,0 +1,22 @@
+﻿@page
+@model LoginModel
+
+<section class="login-section">
+    <h1 class="login-logo">Express Voitures</h1>
+
+    <form class="login-form" method="post">
+        <div class="form-group">
+            <label for="Input_Email" class="login-label">Adresse email</label>
+            <input asp-for="Input.Email" id="Input_Email" class="login-input" placeholder="Adresse email" />
+        </div>
+        <div class="form-group">
+            <label for="Input_Password" class="login-label">Mot de passe</label>
+            <input asp-for="Input.Password" id="Input_Password" type="password" class="login-input" placeholder="Mot de passe" />
+        </div>
+        <div class="login-buttons">
+            <button type="submit" class="btn-login">Se connecter</button>
+            <span class="login-or">ou</span>
+            <a href="@Url.Page("/Account/Register", new { area = "Identity" })" class="btn-login">S'inscrire</a>
+        </div>
+    </form>
+</section>

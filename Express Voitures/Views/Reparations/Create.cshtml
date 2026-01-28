@@ -1,0 +1,52 @@
+﻿@model Express_Voitures.Models.Reparation
+
+@{
+    ViewData["Title"] = "Ajouter un frais";
+}
+
+<div class="form-wrapper">
+    <h1 class="main-title" style=" margin-bottom: 40px;">Ajouter une réparation</h1>
+
+    <form asp-action="Create" class="car-form">
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" asp-for="VoitureId" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="field-container">
+            <label asp-for="Description" class="label-style">Description de l'intervention</label>
+            <input asp-for="Description" class="input-rect" placeholder="Ex: Remplacement courroie de distribution" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="field-container">
+            <label asp-for="Cout" class="label-style">Coût de la réparation (€)</label>
+            <input asp-for="Cout" class="input-rect" type="number" step="0.01" placeholder="0.00" />
+            <span asp-validation-for="Cout" class="text-danger"></span>
+        </div>
+
+        <div class="field-container">
+            <label asp-for="DateReparation" class="label-style">Date de l'intervention</label>
+            <input asp-for="DateReparation" type="date" class="input-rect" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            <span asp-validation-for="DateReparation" class="text-danger"></span>
+        </div>
+
+        <div class="button-area" style="margin-top: 40px; display: flex; flex-direction: column; align-items: center; gap: 15px; width: 100%;">
+
+            <button type="submit" class="btn-publish" style="width: 100%; max-width: 400px; min-height: 55px;">
+                Enregistrer la réparation
+            </button>
+
+            <a asp-controller="Voitures" asp-action="Edit" asp-route-id="@Model.VoitureId" class="btn-back" style="text-decoration: none; color: #796157; font-size: 0.9rem;">
+                Annuler et revenir à la voiture
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

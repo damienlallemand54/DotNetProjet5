@@ -1,0 +1,13 @@
+﻿@model Express_Voitures.Models.Voiture
+
+<div class="delete-success-container">
+    <h1 class="delete-success-title">
+        @($"{Model.Annee} {Model.Marque?.Nom} {Model.Modele?.Nom} {Model.Finition?.Nom}")
+    </h1>
+    <p class="delete-success-text">
+        a bien été supprimée
+    </p>
+    <a href="@Url.Action("Index", "Home")" class="delete-success-cta">
+        Retour à l'accueil
+    </a>
+</div>

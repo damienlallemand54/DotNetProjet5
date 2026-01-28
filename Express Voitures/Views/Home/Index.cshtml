@@ -1,0 +1,42 @@
+﻿@model List<Express_Voitures.Models.Voiture>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<section class="hero-section text-center">
+    <h1 class="hero-title">Nos voitures</h1>
+
+    <button class="cta-primary" onclick="location.href='@Url.Action("Create", "Voitures")'">
+        + Ajouter une voiture
+    </button>
+</section>
+
+<section class="cars-section home-page">
+    <div class="row">
+        @foreach (var voiture in Model)
+        {
+            <div class="col-md-6 mb-4">
+                <a href="@Url.Action("Details", "Voitures", new { id = voiture.Id })" class="car-card-link">
+                    <div class="car-card">
+                        <img src="@voiture.PhotoUrl" alt="@voiture.Marque?.Nom @voiture.Modele?.Nom" class="car-image" />
+                        <div class="car-info">
+                            <p class="car-price">@voiture.PrixVente.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("fr-FR"))</p>
+                            <div class="car-details">
+                                <p>@voiture.Annee</p>
+                                <p>@voiture.Marque?.Nom</p>
+                                <p>@voiture.Modele?.Nom</p>
+                                <p>@voiture.Finition?.Nom</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</section>
+
+
+
+
+
